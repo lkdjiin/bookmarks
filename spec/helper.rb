@@ -2,5 +2,10 @@
 
 require 'coco'
 
-require './lib/bookmarks_file'
-include BookmarksFile
+require './lib/bookmarks'
+include Bookmarks
+
+RSpec.configure do |config|
+  config.order = "random"
+end
+

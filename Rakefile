@@ -3,10 +3,10 @@
 require 'rake'
 require 'rspec/core/rake_task'
 
-desc 'Test BookmarksFile'
+desc 'Test Bookmarks'
 task :default => :spec
 
-desc 'Test BookmarksFile with rspec'
+desc 'Test Bookmarks with rspec'
 RSpec::Core::RakeTask.new(:spec) do |t|
   t.rspec_opts = ['--color']
 end

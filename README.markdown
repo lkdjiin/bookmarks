@@ -1,4 +1,4 @@
-BookmarksFile [![Build Status](https://travis-ci.org/lkdjiin/bookmarks_file.png)](https://travis-ci.org/lkdjiin/bookmarks_file)
+Bookmarks [![Build Status](https://travis-ci.org/lkdjiin/bookmarks.png)](https://travis-ci.org/lkdjiin/bookmarks)
 ================
 
 

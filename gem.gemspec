@@ -3,7 +3,7 @@
 require 'rake'
 
 Gem::Specification.new do |s|
-  s.name = 'bookmarks_file'
+  s.name = 'bookmarks'
   s.version = File.read('VERSION').strip
   s.authors = ['Xavier Nayrac']
   s.email = 'xavier.nayrac@gmail.com'
