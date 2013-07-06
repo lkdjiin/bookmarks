@@ -1,0 +1,5 @@
+:threeshold: 100
+:directories:
+- lib
+:excludes:
+- spec
