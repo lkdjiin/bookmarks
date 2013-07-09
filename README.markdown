@@ -61,6 +61,7 @@ Contributing
 License
 --------------------------
 
+MIT
 
 
 Questions and/or Comments
