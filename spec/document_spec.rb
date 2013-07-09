@@ -30,6 +30,7 @@ describe Document do
     it { should respond_to(:build) }
     it { should respond_to(:document) }
     its(:document) { should eq "" }
+    its(:total) { should eq 0 }
 
     it "should build a 'empty' bookmarks file" do
       ary = []
@@ -37,6 +38,7 @@ describe Document do
         ary.each {|e| e}
       end
       document.should == fixture_file('empty_netscape_file.html')
+      @object.total.should eq 0
     end
 
     it "should build a bookmarks file" do
@@ -45,6 +47,7 @@ describe Document do
         ary.each {|e| e}
       end
       document.should == fixture_file('mini_netscape_file.html')
+      @object.total.should eq 2
     end
 
     describe "document is always available" do
@@ -74,6 +77,8 @@ describe Document do
       before do
         @object.parse fixture_file_path('mini_netscape_file.html')
       end
+
+      its(:total) { should eq 2 }
 
       describe "first bookmark" do
         subject { @object.bookmarks.first }

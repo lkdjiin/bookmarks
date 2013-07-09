@@ -19,6 +19,7 @@ module Bookmarks
       @bookmarks_format = format
       @document = ""
       @bookmarks = []
+      @total = 0
     end
 
     # Public: Returns the Symbol format of the document. Currently
@@ -30,6 +31,9 @@ module Bookmarks
 
     # Public: Returns an Array of NetscapeBookmark bookmarks.
     attr_reader :bookmarks
+
+    # Public: Returns the Integer numbers of bookmarks in the document.
+    attr_reader :total
 
     # Public: Build a document, ie build a file of bookmarks.
     #
@@ -46,7 +50,10 @@ module Bookmarks
     # Returns nothing.
     def build &block
       @document += FIRST_PART
-      block.call.each {|n| @document += n.to_s + "\n" }
+      block.call.each do |n|
+        @document += n.to_s + "\n"
+        @total += 1
+      end
       @document += LAST_PART
     end
 
@@ -58,6 +65,7 @@ module Bookmarks
     # Returns the String document (see also #document).
     def parse file_path
       File.new(file_path).readlines.each {|line| parse_a_bookmark line }
+      @total = @bookmarks.size
     end
 
     private
