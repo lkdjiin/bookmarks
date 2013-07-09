@@ -84,7 +84,7 @@ describe Document do
         subject { @object.bookmarks.first }
         its(:url) { should eq "http://example1.com" }
         its(:title) { should eq "title 1" }
-        its(:date) { should eq "2001-02-03 01:00:00 +0100" }
+        its(:date) { should start_with "2001-02-03 01:00:00" }
         its(:tags) { should eq "t1,t2" }
         its(:description) { should eq "description" }
       end
@@ -93,7 +93,7 @@ describe Document do
         subject { @object.bookmarks.last }
         its(:url) { should eq "http://example2.com" }
         its(:title) { should eq "title 2" }
-        its(:date) { should eq "2001-02-03 01:00:00 +0100" }
+        its(:date) { should start_with "2001-02-03 01:00:00" }
         its(:tags) { should eq "" }
         its(:description) { should eq "" }
       end
