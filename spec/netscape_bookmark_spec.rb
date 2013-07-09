@@ -31,10 +31,6 @@ describe NetscapeBookmark do
     its(:description) { should be_empty }
   end
 
-  describe "#to_s" do
-
-  end
-
   describe "#url" do
     before { @object.url = "http://example.com" }
     its(:url) { should eq "http://example.com" }

@@ -14,3 +14,7 @@ def fixture_file filename
   File.read file_path
 end
 
+def fixture_file_path filename
+  File.expand_path(File.dirname(__FILE__) + '/fixtures/' + filename)
+end
+

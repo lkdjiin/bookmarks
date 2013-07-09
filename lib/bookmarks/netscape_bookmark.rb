@@ -20,6 +20,23 @@ module Bookmarks
       @description = description
     end
 
+    # Public: Initialize a new NetscapeBookmark object from a line from
+    # a bookmarks file.
+    #
+    # line - String line from a bookmarks file.
+    #
+    # Returns a new NetscapeBookmark object.
+    def self.from_string line
+      url = /HREF="(.*?)"/.match(line)[1]
+      title = /HREF=.*>(.*)<\/A>$/.match(line)[1]
+      date = /ADD_DATE="(.*?)"/.match(line)[1]
+      date = Time.at(date.to_i).to_s
+      tags = /TAGS="(.*?)"/.match(line)[1]
+      title = prettify_title title, url
+      new url: url, title: title, date: date, tags: tags
+    end
+
+
     # Public: Set/get the String url.
     attr_accessor :url
 
@@ -47,5 +64,30 @@ module Bookmarks
         str + "\n<DD>#{@description}"
       end
     end
+
+    # In some case (which?) Delicious miss the title and we have a crapy
+    # 'None' instead of the original title. Bad news is the original title
+    # is lost. And there is no good news :) In such case, we build a new
+    # title from the url.
+    #
+    # Examples:
+    #   # Before expand_title
+    #   @title # => 'None'
+    #   @url   # => "http://designmodo.com/flat-design-colors/"
+    #   # After expand_title
+    #   @title # => 'flat design colors'
+    #
+    # Returns String prettified title.
+    def self.prettify_title title, url
+      return title unless title == '' || title == 'None'
+      title = url
+      # Remove '/' at the end if it exists.
+      title = title.gsub(/\/$/, '')
+      # Keep the last element of the url.
+      title = title.match(/^.*\/(.*)/)[1]
+      # Substitute each '-' by a space.
+      title = title.gsub('-', ' ')
+    end
+
   end
 end

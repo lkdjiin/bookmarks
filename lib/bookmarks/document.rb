@@ -6,13 +6,6 @@ module Bookmarks
   # (called «document»).
   class Document
 
-    # Public: Returns the Symbol format of the document. Currently
-    #   there is only one format available: `:netscape`.
-    attr_reader :bookmarks_format
-
-    # Public: Returns the String document.
-    attr_reader :document
-
     # Public: Init a new Document.
     #
     # format - The Symbol format of the document (Optional).
@@ -25,7 +18,18 @@ module Bookmarks
     def initialize format: :netscape
       @bookmarks_format = format
       @document = ""
+      @bookmarks = []
     end
+
+    # Public: Returns the Symbol format of the document. Currently
+    #   there is only one format available: `:netscape`.
+    attr_reader :bookmarks_format
+
+    # Public: Returns the String document.
+    attr_reader :document
+
+    # Public: Returns an Array of NetscapeBookmark bookmarks.
+    attr_reader :bookmarks
 
     # Public: Build a document, ie build a file of bookmarks.
     #
@@ -46,9 +50,31 @@ module Bookmarks
       @document += LAST_PART
     end
 
-    def parse
-
+    # Public: Parse a file of bookmarks (netscape format). Bookmarks could
+    # then be retrieved with #bookmarks.
+    #
+    # file_path - Full String pathname of the file to parse.
+    #
+    # Returns nothing.
+    def parse file_path
+      File.new(file_path).readlines.each {|line| parse_a_bookmark line }
     end
+
+    private
+
+    # Parse a single line from a bookmarks file.
+    #
+    # line - String.
+    #
+    # Returns nothing.
+    def parse_a_bookmark line
+      if line =~ /^<DT>/
+        @bookmarks << NetscapeBookmark.from_string(line)
+      elsif line =~ /^<DD>/
+        @bookmarks.last.description = line[4..-1].chomp
+      end
+    end
+
 
 # First part of a bookmark's file in netscape format.
 FIRST_PART = <<CODE

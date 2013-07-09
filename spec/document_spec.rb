@@ -46,5 +46,63 @@ describe Document do
       end
       @object.document.should == fixture_file('mini_netscape_file.html')
     end
+
+    it "should parse a empty bookmarks file" do
+      @object.parse fixture_file_path('empty_netscape_file.html')
+      @object.bookmarks.should == []
+    end
+
+    describe "with a valid bookmarks file" do
+      before do
+        @object.parse fixture_file_path('mini_netscape_file.html')
+      end
+
+      describe "first bookmark" do
+        subject { @object.bookmarks.first }
+        its(:url) { should eq "http://example1.com" }
+        its(:title) { should eq "title 1" }
+        its(:date) { should eq "2001-02-03 01:00:00 +0100" }
+        its(:tags) { should eq "t1,t2" }
+        its(:description) { should eq "description" }
+      end
+
+      describe "second bookmark" do
+        subject { @object.bookmarks.last }
+        its(:url) { should eq "http://example2.com" }
+        its(:title) { should eq "title 2" }
+        its(:date) { should eq "2001-02-03 01:00:00 +0100" }
+        its(:tags) { should eq "" }
+        its(:description) { should eq "" }
+      end
+    end
+
+    describe "with a bookmarks file containing 'None' titles" do
+      before do
+        @object.parse fixture_file_path('none_titles_netscape_file.html')
+      end
+
+      describe "first bookmark" do
+        subject { @object.bookmarks.first }
+        its(:title) { should eq "example.com" }
+      end
+
+      describe "second bookmark" do
+        subject { @object.bookmarks[1] }
+        its(:title) { should eq "title" }
+      end
+
+      describe "third bookmark" do
+        subject { @object.bookmarks[2] }
+        its(:title) { should eq "title subtitle" }
+      end
+
+      describe "fourth bookmark" do
+        subject { @object.bookmarks[3] }
+        its(:title) { should eq "title.html" }
+      end
+
+    end
+
   end
+
 end
