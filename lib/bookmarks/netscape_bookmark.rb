@@ -70,7 +70,8 @@ module Bookmarks
     # is lost. And there is no good news :) In such case, we build a new
     # title from the url.
     #
-    # Examples:
+    # Examples
+    #
     #   # Before expand_title
     #   @title # => 'None'
     #   @url   # => "http://designmodo.com/flat-design-colors/"

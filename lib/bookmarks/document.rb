@@ -10,7 +10,7 @@ module Bookmarks
     #
     # format - The Symbol format of the document (Optional).
     #
-    # Examples:
+    # Examples
     #
     #   # The two following calls work the same way.
     #   Document.new
@@ -40,14 +40,14 @@ module Bookmarks
     # block - A block that enumerate all NetscapeBookmark to put
     #         into the document.
     #
-    # Examples:
+    # Examples
     #
     #   # ary is an array of NetscapeBookmark.
     #   document.build do
     #     ary.each {|e| e }
     #   end
     #
-    # Returns nothing.
+    # Returns the String document.
     def build &block
       @document += FIRST_PART
       block.call.each do |n|
