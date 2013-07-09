@@ -33,18 +33,36 @@ describe Document do
 
     it "should build a 'empty' bookmarks file" do
       ary = []
-      @object.build do
+      document = @object.build do
         ary.each {|e| e}
       end
-      @object.document.should == fixture_file('empty_netscape_file.html')
+      document.should == fixture_file('empty_netscape_file.html')
     end
 
     it "should build a bookmarks file" do
       ary = array_of_bookmarks
-      @object.build do
+      document = @object.build do
         ary.each {|e| e}
       end
-      @object.document.should == fixture_file('mini_netscape_file.html')
+      document.should == fixture_file('mini_netscape_file.html')
+    end
+
+    describe "document is always available" do
+      it "should build a 'empty' bookmarks file" do
+        ary = []
+        @object.build do
+          ary.each {|e| e}
+        end
+        @object.document.should == fixture_file('empty_netscape_file.html')
+      end
+
+      it "should build a bookmarks file" do
+        ary = array_of_bookmarks
+        @object.build do
+          ary.each {|e| e}
+        end
+        @object.document.should == fixture_file('mini_netscape_file.html')
+      end
     end
 
     it "should parse a empty bookmarks file" do

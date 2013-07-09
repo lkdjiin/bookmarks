@@ -55,7 +55,7 @@ module Bookmarks
     #
     # file_path - Full String pathname of the file to parse.
     #
-    # Returns nothing.
+    # Returns the String document (see also #document).
     def parse file_path
       File.new(file_path).readlines.each {|line| parse_a_bookmark line }
     end
