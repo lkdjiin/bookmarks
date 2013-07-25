@@ -5,7 +5,8 @@ Description
 -----------
 
 Bookmarks is a library to parse or build a file of bookmarks, currently
-only files in netscape format, like the ones exported by Delicious.
+only files in netscape format, like the ones exported by Delicious or
+Firefox.
 
 Install
 -------------------------
