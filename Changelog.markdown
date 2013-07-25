@@ -1,3 +1,9 @@
+version 0.2.1  (2013-07-25)
+===========================
+
+* Bugfix: URIs not starting with 'http' are now ignored.
+
+
 version 0.2.0  (2013-07-25)
 ===========================
 

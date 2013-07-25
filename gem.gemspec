@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.homepage = 'https://github.com/lkdjiin/bookmarks'
   s.description = %q{Bookmarks is a library to parse or build a file of
 bookmarks, currently only files in netscape format, like the ones
-exported by Delicious.}
+exported by Delicious or Firefox.}
 	
 	readmes = FileList.new('*') do |list|
 		list.exclude(/(^|[^.a-z])[a-z]+/)
