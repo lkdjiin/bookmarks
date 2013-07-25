@@ -20,6 +20,7 @@ module Bookmarks
       @document = ""
       @bookmarks = []
       @total = 0
+      @h3_tags = []
     end
 
     # Public: Returns the Symbol format of the document. Currently
@@ -75,12 +76,32 @@ module Bookmarks
     # line - String.
     #
     # Returns nothing.
+    # TODO This should have its own parser class.
     def parse_a_bookmark line
-      if line =~ /^<DT>/
+      line = line.strip
+      if line =~ /^<DT><H3>/
+        @h3_tags << h3_tags(line)
+      elsif line =~ /^<\/DL>/
+        @h3_tags.pop
+      elsif line =~ /<DT><A/
         @bookmarks << NetscapeBookmark.from_string(line)
+        if (not @h3_tags.empty?) && (not @bookmarks.last.nil?)
+          @bookmarks.last.add_tags @h3_tags
+        end
       elsif line =~ /^<DD>/
         @bookmarks.last.description = line[4..-1].chomp
       end
+    end
+
+    # Get the h3's content of a line. H3 could be use as a tag in
+    # a netscape bookmark's file.
+    #
+    # line - String.
+    #
+    # Returns String h3 content or empty string.
+    def h3_tags line
+      md = /<H3>(.*?)<\/H3>/.match(line)
+      md ? md[1] : ""
     end
 
 
