@@ -1,3 +1,9 @@
+version 0.2.2  (2013-07-25)
+===========================
+
+* Bugfix: It now works with real Firefox files ;)
+
+
 version 0.2.1  (2013-07-25)
 ===========================
 
