@@ -83,7 +83,7 @@ module Bookmarks
         @h3_tags << h3_tags(line)
       elsif line =~ /^<\/DL>/
         @h3_tags.pop
-      elsif line =~ /<DT><A/
+      elsif line =~ /<DT><A HREF="http/
         @bookmarks << NetscapeBookmark.from_string(line)
         if (not @h3_tags.empty?) && (not @bookmarks.last.nil?)
           @bookmarks.last.add_tags @h3_tags

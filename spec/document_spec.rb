@@ -224,6 +224,31 @@ describe Document do
       end
 
     end# }}}
+
+    describe "with more than http href" do
+      before do
+        @object.parse fixture_file_path('not_just_http_file.html')
+      end
+
+      its(:total) { should eq 2 }
+
+      describe "first bookmark" do
+        subject { @object.bookmarks.first }
+        its(:url) { should eq "http://example1.com" }
+        its(:title) { should eq "title1" }
+        its(:tags) { should eq "Category1" }
+        its(:description) { should eq "Blabla" }
+      end
+
+      describe "second bookmark" do
+        subject { @object.bookmarks[1] }
+        its(:url) { should eq "http://example3.com" }
+        its(:title) { should eq "title3" }
+        its(:tags) { should eq "Category1" }
+        its(:description) { should eq "" }
+      end
+
+    end
   end# }}}
 
 end
