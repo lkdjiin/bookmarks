@@ -79,7 +79,7 @@ module Bookmarks
     # TODO This should have its own parser class.
     def parse_a_bookmark line
       line = line.strip
-      if line =~ /^<DT><H3>/
+      if line =~ /^<DT><H3/
         @h3_tags << h3_tags(line)
       elsif line =~ /^<\/DL>/
         @h3_tags.pop
@@ -100,7 +100,7 @@ module Bookmarks
     #
     # Returns String h3 content or empty string.
     def h3_tags line
-      md = /<H3>(.*?)<\/H3>/.match(line)
+      md = /<H3.*?>(.*?)<\/H3>/.match(line)
       md ? md[1] : ""
     end
 
