@@ -23,6 +23,6 @@ exported by Delicious or Firefox.}
   # s.add_dependency 'xxx', '>= 0.4.2'
   s.add_development_dependency 'rspec'
   s.add_development_dependency 'coco', '>= 0.7.1'
-  s.add_development_dependency('yard')
+  s.add_development_dependency('yard', '~> 0.9.11')
   s.add_development_dependency('yard-tomdoc')
 end
