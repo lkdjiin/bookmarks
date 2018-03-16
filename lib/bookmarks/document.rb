@@ -1,5 +1,3 @@
-# -*- encoding: utf-8 -*-
-
 module Bookmarks
 
   # Public: Document is your main interface to the file of bookmarks
