@@ -1,3 +1,5 @@
+require 'date'
+
 module Bookmarks
 
   # Public: A single bookmark in netscape format.

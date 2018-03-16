@@ -17,26 +17,34 @@ describe Document do
 
   it "should have netscape as default format" do
     object = Document.new
-    object.bookmarks_format.should == :netscape
+    expect(object.bookmarks_format).to eq(:netscape)
   end
 
   describe "with netscape format" do
     before { @object = Document.new format: :netscape }
     subject { @object }
 
-    it { should respond_to(:parse) }
-    it { should respond_to(:build) }
-    it { should respond_to(:document) }
-    its(:document) { should eq "" }
-    its(:total) { should eq 0 }
+    it { is_expected.to respond_to(:parse) }
+    it { is_expected.to respond_to(:build) }
+    it { is_expected.to respond_to(:document) }
+
+    describe '#document' do
+      subject { super().document }
+      it { is_expected.to eq "" }
+    end
+
+    describe '#total' do
+      subject { super().total }
+      it { is_expected.to eq 0 }
+    end
 
     it "should build a 'empty' bookmarks file" do
       ary = []
       document = @object.build do
         ary.each {|e| e}
       end
-      document.should == fixture_file('empty_netscape_file.html')
-      @object.total.should eq 0
+      expect(document).to eq(fixture_file('empty_netscape_file.html'))
+      expect(@object.total).to eq 0
     end
 
     it "should build a bookmarks file" do
@@ -44,8 +52,8 @@ describe Document do
       document = @object.build do
         ary.each {|e| e}
       end
-      document.should == fixture_file('mini_netscape_file.html')
-      @object.total.should eq 2
+      expect(document).to eq(fixture_file('mini_netscape_file.html'))
+      expect(@object.total).to eq 2
     end
 
     describe "document is always available" do
@@ -54,7 +62,7 @@ describe Document do
         @object.build do
           ary.each {|e| e}
         end
-        @object.document.should == fixture_file('empty_netscape_file.html')
+        expect(@object.document).to eq(fixture_file('empty_netscape_file.html'))
       end
 
       it "should build a bookmarks file" do
@@ -62,13 +70,13 @@ describe Document do
         @object.build do
           ary.each {|e| e}
         end
-        @object.document.should == fixture_file('mini_netscape_file.html')
+        expect(@object.document).to eq(fixture_file('mini_netscape_file.html'))
       end
     end
 
     it "should parse a empty bookmarks file" do
       @object.parse fixture_file_path('empty_netscape_file.html')
-      @object.bookmarks.should == []
+      expect(@object.bookmarks).to eq([])
     end
 
     describe "with a valid bookmarks file" do
@@ -76,24 +84,67 @@ describe Document do
         @object.parse fixture_file_path('mini_netscape_file.html')
       end
 
-      its(:total) { should eq 2 }
+      describe '#total' do
+        subject { super().total }
+        it { is_expected.to eq 2 }
+      end
 
       describe "first bookmark" do
         subject { @object.bookmarks.first }
-        its(:url) { should eq "http://example1.com" }
-        its(:title) { should eq "title 1" }
-        its(:date) { should start_with "2001-02-03" }
-        its(:tags) { should eq "t1,t2" }
-        its(:description) { should eq "description" }
+
+        describe '#url' do
+          subject { super().url }
+          it { is_expected.to eq "http://example1.com" }
+        end
+
+        describe '#title' do
+          subject { super().title }
+          it { is_expected.to eq "title 1" }
+        end
+
+        describe '#date' do
+          subject { super().date }
+          it { is_expected.to start_with "2001-02-03" }
+        end
+
+        describe '#tags' do
+          subject { super().tags }
+          it { is_expected.to eq "t1,t2" }
+        end
+
+        describe '#description' do
+          subject { super().description }
+          it { is_expected.to eq "description" }
+        end
       end
 
       describe "second bookmark" do
         subject { @object.bookmarks.last }
-        its(:url) { should eq "http://example2.com" }
-        its(:title) { should eq "title 2" }
-        its(:date) { should start_with "2001-02-03" }
-        its(:tags) { should eq "" }
-        its(:description) { should eq "" }
+
+        describe '#url' do
+          subject { super().url }
+          it { is_expected.to eq "http://example2.com" }
+        end
+
+        describe '#title' do
+          subject { super().title }
+          it { is_expected.to eq "title 2" }
+        end
+
+        describe '#date' do
+          subject { super().date }
+          it { is_expected.to start_with "2001-02-03" }
+        end
+
+        describe '#tags' do
+          subject { super().tags }
+          it { is_expected.to eq "" }
+        end
+
+        describe '#description' do
+          subject { super().description }
+          it { is_expected.to eq "" }
+        end
       end
     end
 
@@ -104,22 +155,38 @@ describe Document do
 
       describe "first bookmark" do
         subject { @object.bookmarks.first }
-        its(:title) { should eq "example.com" }
+
+        describe '#title' do
+          subject { super().title }
+          it { is_expected.to eq "example.com" }
+        end
       end
 
       describe "second bookmark" do
         subject { @object.bookmarks[1] }
-        its(:title) { should eq "title" }
+
+        describe '#title' do
+          subject { super().title }
+          it { is_expected.to eq "title" }
+        end
       end
 
       describe "third bookmark" do
         subject { @object.bookmarks[2] }
-        its(:title) { should eq "title subtitle" }
+
+        describe '#title' do
+          subject { super().title }
+          it { is_expected.to eq "title subtitle" }
+        end
       end
 
       describe "fourth bookmark" do
         subject { @object.bookmarks[3] }
-        its(:title) { should eq "title.html" }
+
+        describe '#title' do
+          subject { super().title }
+          it { is_expected.to eq "title.html" }
+        end
       end
 
     end
@@ -129,14 +196,33 @@ describe Document do
         @object.parse fixture_file_path('ultra_mini_firefox_file.html')
       end
 
-      its(:total) { should eq 1 }
+      describe '#total' do
+        subject { super().total }
+        it { is_expected.to eq 1 }
+      end
 
       describe "first bookmark" do
         subject { @object.bookmarks.first }
-        its(:url) { should eq "http://example1.com" }
-        its(:title) { should eq "title1" }
-        its(:tags) { should eq "Category1" }
-        its(:description) { should eq "Blabla" }
+
+        describe '#url' do
+          subject { super().url }
+          it { is_expected.to eq "http://example1.com" }
+        end
+
+        describe '#title' do
+          subject { super().title }
+          it { is_expected.to eq "title1" }
+        end
+
+        describe '#tags' do
+          subject { super().tags }
+          it { is_expected.to eq "Category1" }
+        end
+
+        describe '#description' do
+          subject { super().description }
+          it { is_expected.to eq "Blabla" }
+        end
       end
 
     end
@@ -146,38 +232,105 @@ describe Document do
         @object.parse fixture_file_path('mini_firefox_file.html')
       end
 
-      its(:total) { should eq 4 }
+      describe '#total' do
+        subject { super().total }
+        it { is_expected.to eq 4 }
+      end
 
       describe "first bookmark" do
         subject { @object.bookmarks.first }
-        its(:url) { should eq "http://example1.com" }
-        its(:title) { should eq "title1" }
-        its(:tags) { should eq "Category1" }
-        its(:description) { should eq "" }
+
+        describe '#url' do
+          subject { super().url }
+          it { is_expected.to eq "http://example1.com" }
+        end
+
+        describe '#title' do
+          subject { super().title }
+          it { is_expected.to eq "title1" }
+        end
+
+        describe '#tags' do
+          subject { super().tags }
+          it { is_expected.to eq "Category1" }
+        end
+
+        describe '#description' do
+          subject { super().description }
+          it { is_expected.to eq "" }
+        end
       end
 
       describe "second bookmark" do
         subject { @object.bookmarks[1] }
-        its(:url) { should eq "http://example2.com" }
-        its(:title) { should eq "title2" }
-        its(:tags) { should eq "Category1" }
-        its(:description) { should eq "Blabla" }
+
+        describe '#url' do
+          subject { super().url }
+          it { is_expected.to eq "http://example2.com" }
+        end
+
+        describe '#title' do
+          subject { super().title }
+          it { is_expected.to eq "title2" }
+        end
+
+        describe '#tags' do
+          subject { super().tags }
+          it { is_expected.to eq "Category1" }
+        end
+
+        describe '#description' do
+          subject { super().description }
+          it { is_expected.to eq "Blabla" }
+        end
       end
 
       describe "third bookmark" do
         subject { @object.bookmarks[2] }
-        its(:url) { should eq "http://example3.com" }
-        its(:title) { should eq "title3" }
-        its(:tags) { should eq "Category2,Foo,Bar" }
-        its(:description) { should eq "" }
+
+        describe '#url' do
+          subject { super().url }
+          it { is_expected.to eq "http://example3.com" }
+        end
+
+        describe '#title' do
+          subject { super().title }
+          it { is_expected.to eq "title3" }
+        end
+
+        describe '#tags' do
+          subject { super().tags }
+          it { is_expected.to eq "Category2,Foo,Bar" }
+        end
+
+        describe '#description' do
+          subject { super().description }
+          it { is_expected.to eq "" }
+        end
       end
 
       describe "fourth bookmark" do
         subject { @object.bookmarks[3] }
-        its(:url) { should eq "http://example4.com" }
-        its(:title) { should eq "title4" }
-        its(:tags) { should eq "Category2,Foo,machin" }
-        its(:description) { should eq "" }
+
+        describe '#url' do
+          subject { super().url }
+          it { is_expected.to eq "http://example4.com" }
+        end
+
+        describe '#title' do
+          subject { super().title }
+          it { is_expected.to eq "title4" }
+        end
+
+        describe '#tags' do
+          subject { super().tags }
+          it { is_expected.to eq "Category2,Foo,machin" }
+        end
+
+        describe '#description' do
+          subject { super().description }
+          it { is_expected.to eq "" }
+        end
       end
 
     end
@@ -187,38 +340,105 @@ describe Document do
         @object.parse fixture_file_path('almost_real_firefox_file.html')
       end
 
-      its(:total) { should eq 4 }
+      describe '#total' do
+        subject { super().total }
+        it { is_expected.to eq 4 }
+      end
 
       describe "first bookmark" do
         subject { @object.bookmarks.first }
-        its(:url) { should eq "http://example1.com" }
-        its(:title) { should eq "title1" }
-        its(:tags) { should eq "Category1" }
-        its(:description) { should eq "Blabla" }
+
+        describe '#url' do
+          subject { super().url }
+          it { is_expected.to eq "http://example1.com" }
+        end
+
+        describe '#title' do
+          subject { super().title }
+          it { is_expected.to eq "title1" }
+        end
+
+        describe '#tags' do
+          subject { super().tags }
+          it { is_expected.to eq "Category1" }
+        end
+
+        describe '#description' do
+          subject { super().description }
+          it { is_expected.to eq "Blabla" }
+        end
       end
 
       describe "second bookmark" do
         subject { @object.bookmarks[1] }
-        its(:url) { should eq "http://example2.com" }
-        its(:title) { should eq "title2" }
-        its(:tags) { should eq "Category1" }
-        its(:description) { should eq "" }
+
+        describe '#url' do
+          subject { super().url }
+          it { is_expected.to eq "http://example2.com" }
+        end
+
+        describe '#title' do
+          subject { super().title }
+          it { is_expected.to eq "title2" }
+        end
+
+        describe '#tags' do
+          subject { super().tags }
+          it { is_expected.to eq "Category1" }
+        end
+
+        describe '#description' do
+          subject { super().description }
+          it { is_expected.to eq "" }
+        end
       end
 
       describe "third bookmark" do
         subject { @object.bookmarks[2] }
-        its(:url) { should eq "http://example3.com" }
-        its(:title) { should eq "title3" }
-        its(:tags) { should eq "Category2,Foo,Bar" }
-        its(:description) { should eq "" }
+
+        describe '#url' do
+          subject { super().url }
+          it { is_expected.to eq "http://example3.com" }
+        end
+
+        describe '#title' do
+          subject { super().title }
+          it { is_expected.to eq "title3" }
+        end
+
+        describe '#tags' do
+          subject { super().tags }
+          it { is_expected.to eq "Category2,Foo,Bar" }
+        end
+
+        describe '#description' do
+          subject { super().description }
+          it { is_expected.to eq "" }
+        end
       end
 
       describe "fourth bookmark" do
         subject { @object.bookmarks[3] }
-        its(:url) { should eq "http://example4.com" }
-        its(:title) { should eq "title4" }
-        its(:tags) { should eq "Category2,Foo,machin" }
-        its(:description) { should eq "" }
+
+        describe '#url' do
+          subject { super().url }
+          it { is_expected.to eq "http://example4.com" }
+        end
+
+        describe '#title' do
+          subject { super().title }
+          it { is_expected.to eq "title4" }
+        end
+
+        describe '#tags' do
+          subject { super().tags }
+          it { is_expected.to eq "Category2,Foo,machin" }
+        end
+
+        describe '#description' do
+          subject { super().description }
+          it { is_expected.to eq "" }
+        end
       end
     end
 
@@ -227,7 +447,11 @@ describe Document do
 
       describe "third bookmark" do
         subject { @object.bookmarks[2] }
-        its(:tags) { should eq "Category2,Liens d'Ubuntu,Bar" }
+
+        describe '#tags' do
+          subject { super().tags }
+          it { is_expected.to eq "Category2,Liens d'Ubuntu,Bar" }
+        end
       end
     end
 
@@ -236,22 +460,57 @@ describe Document do
         @object.parse fixture_file_path('not_just_http_file.html')
       end
 
-      its(:total) { should eq 2 }
+      describe '#total' do
+        subject { super().total }
+        it { is_expected.to eq 2 }
+      end
 
       describe "first bookmark" do
         subject { @object.bookmarks.first }
-        its(:url) { should eq "http://example1.com" }
-        its(:title) { should eq "title1" }
-        its(:tags) { should eq "Category1" }
-        its(:description) { should eq "Blabla" }
+
+        describe '#url' do
+          subject { super().url }
+          it { is_expected.to eq "http://example1.com" }
+        end
+
+        describe '#title' do
+          subject { super().title }
+          it { is_expected.to eq "title1" }
+        end
+
+        describe '#tags' do
+          subject { super().tags }
+          it { is_expected.to eq "Category1" }
+        end
+
+        describe '#description' do
+          subject { super().description }
+          it { is_expected.to eq "Blabla" }
+        end
       end
 
       describe "second bookmark" do
         subject { @object.bookmarks[1] }
-        its(:url) { should eq "http://example3.com" }
-        its(:title) { should eq "title3" }
-        its(:tags) { should eq "Category1" }
-        its(:description) { should eq "" }
+
+        describe '#url' do
+          subject { super().url }
+          it { is_expected.to eq "http://example3.com" }
+        end
+
+        describe '#title' do
+          subject { super().title }
+          it { is_expected.to eq "title3" }
+        end
+
+        describe '#tags' do
+          subject { super().tags }
+          it { is_expected.to eq "Category1" }
+        end
+
+        describe '#description' do
+          subject { super().description }
+          it { is_expected.to eq "" }
+        end
       end
 
     end
