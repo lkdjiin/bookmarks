@@ -220,7 +220,15 @@ describe Document do
         its(:tags) { should eq "Category2,Foo,machin" }
         its(:description) { should eq "" }
       end
+    end
 
+    context "with html entities in H3" do
+      before { @object.parse fixture_file_path('html_entities_in_h3.html') }
+
+      describe "third bookmark" do
+        subject { @object.bookmarks[2] }
+        its(:tags) { should eq "Category2,Liens d'Ubuntu,Bar" }
+      end
     end
 
     describe "with more than http href" do
