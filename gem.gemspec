@@ -18,7 +18,7 @@ exported by Delicious or Firefox.}
   s.files = FileList['lib/**/*.rb', '[A-Z]*'].to_a + readmes
 	s.license = 'MIT'
 	s.required_ruby_version = '>= 2.5.0'
-  s.add_development_dependency 'rspec', '~> 2.14.0'
+  s.add_development_dependency 'rspec', '~> 2.99.0'
   s.add_development_dependency 'coco', '>= 0.7.1'
   s.add_development_dependency('yard', '~> 0.9.11')
   s.add_development_dependency('yard-tomdoc')
