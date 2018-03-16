@@ -1,8 +1,6 @@
-# -*- encoding: utf-8 -*-
-
 require './spec/helper'
 
-def array_of_bookmarks# {{{
+def array_of_bookmarks
   [
     NetscapeBookmark.new(url: "http://example1.com",
                          title: "title 1",
@@ -13,44 +11,44 @@ def array_of_bookmarks# {{{
                          title: "title 2",
                          date: DateTime.new(2001,2,3))
   ]
-end# }}}
+end
 
 describe Document do
 
-  it "should have netscape as default format" do# {{{
+  it "should have netscape as default format" do
     object = Document.new
     object.bookmarks_format.should == :netscape
-  end# }}}
+  end
 
-  describe "with netscape format" do# {{{
+  describe "with netscape format" do
     before { @object = Document.new format: :netscape }
     subject { @object }
 
-    it { should respond_to(:parse) }# {{{
+    it { should respond_to(:parse) }
     it { should respond_to(:build) }
     it { should respond_to(:document) }
     its(:document) { should eq "" }
-    its(:total) { should eq 0 }# }}}
+    its(:total) { should eq 0 }
 
-    it "should build a 'empty' bookmarks file" do# {{{
+    it "should build a 'empty' bookmarks file" do
       ary = []
       document = @object.build do
         ary.each {|e| e}
       end
       document.should == fixture_file('empty_netscape_file.html')
       @object.total.should eq 0
-    end# }}}
+    end
 
-    it "should build a bookmarks file" do# {{{
+    it "should build a bookmarks file" do
       ary = array_of_bookmarks
       document = @object.build do
         ary.each {|e| e}
       end
       document.should == fixture_file('mini_netscape_file.html')
       @object.total.should eq 2
-    end# }}}
+    end
 
-    describe "document is always available" do# {{{
+    describe "document is always available" do
       it "should build a 'empty' bookmarks file" do
         ary = []
         @object.build do
@@ -66,14 +64,14 @@ describe Document do
         end
         @object.document.should == fixture_file('mini_netscape_file.html')
       end
-    end# }}}
+    end
 
-    it "should parse a empty bookmarks file" do# {{{
+    it "should parse a empty bookmarks file" do
       @object.parse fixture_file_path('empty_netscape_file.html')
       @object.bookmarks.should == []
-    end# }}}
+    end
 
-    describe "with a valid bookmarks file" do# {{{
+    describe "with a valid bookmarks file" do
       before do
         @object.parse fixture_file_path('mini_netscape_file.html')
       end
@@ -97,9 +95,9 @@ describe Document do
         its(:tags) { should eq "" }
         its(:description) { should eq "" }
       end
-    end# }}}
+    end
 
-    describe "with a bookmarks file containing 'None' titles" do# {{{
+    describe "with a bookmarks file containing 'None' titles" do
       before do
         @object.parse fixture_file_path('none_titles_netscape_file.html')
       end
@@ -124,9 +122,9 @@ describe Document do
         its(:title) { should eq "title.html" }
       end
 
-    end# }}}
+    end
 
-    describe "with one H3 title" do# {{{
+    describe "with one H3 title" do
       before do
         @object.parse fixture_file_path('ultra_mini_firefox_file.html')
       end
@@ -141,9 +139,9 @@ describe Document do
         its(:description) { should eq "Blabla" }
       end
 
-    end# }}}
+    end
 
-    describe "with H3 titles as tags" do# {{{
+    describe "with H3 titles as tags" do
       before do
         @object.parse fixture_file_path('mini_firefox_file.html')
       end
@@ -182,9 +180,9 @@ describe Document do
         its(:description) { should eq "" }
       end
 
-    end# }}}
+    end
 
-    describe "with almost real firefox file" do# {{{
+    describe "with almost real firefox file" do
       before do
         @object.parse fixture_file_path('almost_real_firefox_file.html')
       end
@@ -222,8 +220,16 @@ describe Document do
         its(:tags) { should eq "Category2,Foo,machin" }
         its(:description) { should eq "" }
       end
+    end
 
-    end# }}}
+    context "with html entities in H3" do
+      before { @object.parse fixture_file_path('html_entities_in_h3.html') }
+
+      describe "third bookmark" do
+        subject { @object.bookmarks[2] }
+        its(:tags) { should eq "Category2,Liens d'Ubuntu,Bar" }
+      end
+    end
 
     describe "with more than http href" do
       before do
@@ -249,6 +255,6 @@ describe Document do
       end
 
     end
-  end# }}}
+  end
 
 end

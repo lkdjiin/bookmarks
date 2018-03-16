@@ -1,5 +1,3 @@
-# -*- encoding: utf-8 -*-
-
 module Bookmarks
 
   # Public: Document is your main interface to the file of bookmarks
@@ -101,7 +99,7 @@ module Bookmarks
     # Returns String h3 content or empty string.
     def h3_tags line
       md = /<H3.*?>(.*?)<\/H3>/.match(line)
-      md ? md[1] : ""
+      md ? CGI.unescapeHTML(md[1]) : ""
     end
 
 

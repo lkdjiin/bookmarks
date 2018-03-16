@@ -1,5 +1,3 @@
-# -*- encoding: utf-8 -*-
-
 module Bookmarks
 
   # Public: A single bookmark in netscape format.
