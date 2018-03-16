@@ -1,4 +1,4 @@
-Bookmarks [![Build Status](https://travis-ci.org/lkdjiin/bookmarks.png)](https://travis-ci.org/lkdjiin/bookmarks) [![Gem Version](https://badge.fury.io/rb/bookmarks.png)](http://badge.fury.io/rb/bookmarks)
+Bookmarks [![Gem Version](https://badge.fury.io/rb/bookmarks.png)](http://badge.fury.io/rb/bookmarks)
 ================
 
 Description

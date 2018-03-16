@@ -1,3 +1,8 @@
+version 0.2.3  (2018-03-16)
+===========================
+
+* Bugfix: Now decode HTML entities in tags.
+
 version 0.2.2  (2013-07-25)
 ===========================
 

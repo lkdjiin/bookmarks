@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    bookmarks (0.2.2)
+    bookmarks (0.2.3)
 
 GEM
   remote: https://rubygems.org/
